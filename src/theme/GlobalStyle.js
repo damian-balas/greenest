@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Montserrat";
     line-height: 1.4;
     overflow-x: hidden;
+    background-color: #edeadb;
   }
 
   button, input {

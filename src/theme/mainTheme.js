@@ -1,5 +1,6 @@
 const theme = {
-  primary: '#26a65b',
+  primary: '#007562',
+  gray: '#edeadb',
 };
 
 export default theme;

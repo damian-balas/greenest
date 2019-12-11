@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Header from './components/Header/Header';
+import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './theme/GlobalStyle';
+import theme from './theme/mainTheme';
+import Header from './components/Header/Header';
 
 class App extends Component {
   state = {};
@@ -9,7 +11,9 @@ class App extends Component {
     return (
       <>
         <GlobalStyle />
-        <Header />
+        <ThemeProvider theme={theme}>
+          <Header />
+        </ThemeProvider>
       </>
     );
   }

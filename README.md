@@ -12,11 +12,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 Clone this repo to your desktop.
 
-    git clone git@github.com:damian-balas/polluted-cities.git
+    git clone git@github.com:damian-balas/greenest.git
 
 Go to it's root directory.
 
-    cd polluted-cities
+    cd greenest
 
 Run npm install to install all dependencies.
 

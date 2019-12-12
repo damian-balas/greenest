@@ -14,6 +14,7 @@ class App extends Component {
     country: '',
     isCountryInvalid: false,
     cities: [],
+    errorMessage: '',
   };
 
   getPollutedCities = async (countryAbbr, citiesLimit) => {
@@ -61,25 +62,39 @@ class App extends Component {
         async () => {
           try {
             localStorage.setItem('country', country);
+            this.setState({
+              errorMessage: '',
+            });
           } catch {
-            console.warn("Couldn't save to local storage");
+            this.setState({
+              errorMessage: "Couldn't save to local storage",
+            });
           }
 
-          const countryAbbr = COUNTRY_MAP.get(country);
-          const cities = await this.getPollutedCities(
-            countryAbbr,
-            CITIES_LIMIT,
-          );
+          try {
+            const countryAbbr = COUNTRY_MAP.get(country);
+            const cities = await this.getPollutedCities(
+              countryAbbr,
+              CITIES_LIMIT,
+            );
 
-          const citiesWikipediaQuery = encodeURI(cities.join('|'));
-          const citiesDescription = await this.getCitiesDescription(
-            citiesWikipediaQuery,
-          );
-          const citiesArray = Object.values(citiesDescription.data.query.pages);
+            const citiesWikipediaQuery = encodeURI(cities.join('|'));
+            const citiesDescription = await this.getCitiesDescription(
+              citiesWikipediaQuery,
+            );
+            const citiesArray = Object.values(
+              citiesDescription.data.query.pages,
+            );
 
-          this.setState({
-            cities: citiesArray,
-          });
+            this.setState({
+              cities: citiesArray,
+              errorMessage: '',
+            });
+          } catch (error) {
+            this.setState({
+              errorMessage: error.message,
+            });
+          }
         },
       );
     }
@@ -87,7 +102,7 @@ class App extends Component {
 
   render() {
     const { handleSubmit } = this;
-    const { isCountryInvalid } = this.state;
+    const { isCountryInvalid, errorMessage } = this.state;
     return (
       <>
         <GlobalStyle />
@@ -96,6 +111,7 @@ class App extends Component {
           <main>
             <Hero />
             <Form
+              errorMessage={errorMessage}
               isCountryInvalid={isCountryInvalid}
               handleSubmit={handleSubmit}
             />

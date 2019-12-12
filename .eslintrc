@@ -1,8 +1,8 @@
 {
   "extends": ["airbnb", "prettier", "prettier/react"],
   "parser": "babel-eslint",
-  "globals": {
-    "document": true
+  "env": {
+    "browser": true
   },
   "rules": {
     "camelcase": 1,

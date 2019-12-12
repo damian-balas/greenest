@@ -85,12 +85,14 @@ const StyledWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 
+const localStorageCountry = localStorage.getItem('country');
+
 class Form extends Component {
   state = {
     activeSuggestion: 0,
     filteredSuggestions: [],
     showSuggestions: false,
-    userInput: '',
+    userInput: localStorageCountry || '',
   };
 
   handleChange = event => {
@@ -103,17 +105,22 @@ class Form extends Component {
     this.setState({
       activeSuggestion: 0,
       filteredSuggestions,
-      showSuggestions: !!filteredSuggestions.length,
+      showSuggestions: !!filteredSuggestions.length && userInput,
       userInput,
     });
   };
 
   handleSuggestionClick = event => {
-    this.setState({
-      activeSuggestion: 0,
-      showSuggestions: false,
-      userInput: event.currentTarget.textContent,
-    });
+    const { handleSubmit } = this;
+    this.setState(
+      {
+        activeSuggestion: 0,
+        showSuggestions: false,
+        filteredSuggestions: [],
+        userInput: event.currentTarget.textContent,
+      },
+      () => handleSubmit(),
+    );
   };
 
   handleKeyDown = event => {
@@ -159,8 +166,9 @@ class Form extends Component {
   handleSubmit = event => {
     const { handleSubmit } = this.props;
     const { userInput } = this.state;
-
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     handleSubmit(userInput);
   };
 
@@ -199,28 +207,20 @@ class Form extends Component {
 
           <StyledButton type="submit">submit</StyledButton>
         </StyledWrapper>
-        {userInput &&
-          (filteredSuggestions.length ? (
-            showSuggestions && (
-              <StyledList>
-                {filteredSuggestions.map((suggestion, index) => {
-                  return (
-                    <StyledListItem
-                      selected={index === activeSuggestion}
-                      key={suggestion}
-                      onClick={handleSuggestionClick}
-                    >
-                      {suggestion}
-                    </StyledListItem>
-                  );
-                })}
-              </StyledList>
-            )
-          ) : (
-            <StyledErrorMessage>
-              <em>No suggestions found</em>
-            </StyledErrorMessage>
-          ))}
+        {showSuggestions && (
+          <StyledList>
+            {filteredSuggestions.length !== 0 &&
+              filteredSuggestions.map((suggestion, index) => (
+                <StyledListItem
+                  selected={index === activeSuggestion}
+                  key={suggestion}
+                  onClick={handleSuggestionClick}
+                >
+                  {suggestion}
+                </StyledListItem>
+              ))}
+          </StyledList>
+        )}
         {isCountryInvalid && (
           <StyledErrorMessage>
             Invalid country, try {suggestions.join(', ')}

@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import bgImage from '../../assets/images/environment.jpg';
 
 const StyledHero = styled.section`
-  height: 40rem;
-  padding: 5rem 3rem;
+  padding: 5rem 3rem 0;
 `;
 
 const StyledImage = styled.div`

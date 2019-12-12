@@ -10,7 +10,7 @@ import Form from './components/Form/Form';
 class App extends Component {
   state = {
     country: '',
-    isCountryInvalid: '',
+    isCountryInvalid: false,
   };
 
   handleSubmit = country => {

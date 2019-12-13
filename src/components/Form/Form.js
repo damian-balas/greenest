@@ -112,7 +112,7 @@ class Form extends PureComponent {
       activeSuggestion: 0,
       filteredSuggestions,
       showSuggestions: !!filteredSuggestions.length && userInput,
-      userInput,
+      userInput: userInput.charAt(0).toUpperCase() + userInput.slice(1),
     });
   };
 

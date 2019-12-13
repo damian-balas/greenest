@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import bgImage from '../../assets/images/environment.jpg';
 
@@ -39,4 +39,4 @@ const Hero = () => (
   </StyledHero>
 );
 
-export default Hero;
+export default memo(Hero);

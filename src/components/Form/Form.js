@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -73,6 +73,11 @@ const StyledButton = styled.button`
   cursor: pointer;
   outline: none;
 
+  :disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+
   :hover,
   :focus {
     opacity: 0.8;
@@ -88,7 +93,7 @@ const StyledWrapper = styled.div`
 
 const localStorageCountry = localStorage.getItem('country');
 
-class Form extends Component {
+class Form extends PureComponent {
   state = {
     activeSuggestion: 0,
     filteredSuggestions: [],

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
@@ -9,10 +9,10 @@ import Hero from './components/Hero/Hero';
 import Form from './components/Form/Form';
 import getDateString from './utils/getDateString';
 import CitiesGrid from './components/CitiesGrid/CitiesGrid';
+import Spinner from './components/Spinner/Spinner';
 
-class App extends Component {
+class App extends PureComponent {
   state = {
-    country: '',
     isCountryInvalid: false,
     isLoading: false,
     cities: [],
@@ -47,61 +47,40 @@ class App extends Component {
     return response;
   };
 
-  handleSubmit = country => {
+  handleSubmit = async country => {
     const { COUNTRY_MAP, CITIES_LIMIT } = this.props;
     if (!COUNTRY_MAP.has(country)) {
       this.setState({
         isCountryInvalid: true,
       });
     } else {
-      this.setState(
-        {
-          country,
-          isCountryInvalid: false,
-        },
-        async () => {
-          this.setState({
-            isLoading: true,
-          });
-          try {
-            localStorage.setItem('country', country);
-            this.setState({
-              errorMessage: '',
-            });
-          } catch {
-            this.setState({
-              errorMessage: "Couldn't save to local storage",
-            });
-          }
+      this.setState({
+        isLoading: true,
+        isCountryInvalid: false,
+      });
 
-          try {
-            const countryAbbr = COUNTRY_MAP.get(country);
-            const cities = await this.getPollutedCities(
-              countryAbbr,
-              CITIES_LIMIT,
-            );
+      try {
+        localStorage.setItem('country', country);
+        const countryAbbr = COUNTRY_MAP.get(country);
+        const cities = await this.getPollutedCities(countryAbbr, CITIES_LIMIT);
 
-            const citiesWikipediaQuery = encodeURI(cities.join('|'));
-            const citiesDescription = await this.getCitiesDescription(
-              citiesWikipediaQuery,
-            );
-            const citiesArray = Object.values(
-              citiesDescription.data.query.pages,
-            );
+        const citiesWikipediaQuery = encodeURI(cities.join('|'));
+        const citiesDescription = await this.getCitiesDescription(
+          citiesWikipediaQuery,
+        );
+        const citiesArray = Object.values(citiesDescription.data.query.pages);
 
-            this.setState({
-              cities: citiesArray,
-              errorMessage: '',
-              isLoading: false,
-            });
-          } catch (error) {
-            this.setState({
-              errorMessage: error.message,
-              isLoading: false,
-            });
-          }
-        },
-      );
+        this.setState({
+          cities: citiesArray,
+          errorMessage: '',
+          isLoading: false,
+        });
+      } catch (error) {
+        this.setState({
+          errorMessage: error.message,
+          isLoading: false,
+        });
+      }
     }
   };
 
@@ -120,7 +99,7 @@ class App extends Component {
               isCountryInvalid={isCountryInvalid}
               handleSubmit={handleSubmit}
             />
-            {isLoading && 'loading...'}
+            {isLoading && <Spinner />}
             {cities.length !== 0 && <CitiesGrid cities={cities} />}
           </main>
         </ThemeProvider>

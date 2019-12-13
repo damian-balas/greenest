@@ -5,6 +5,7 @@ const StyledHeader = styled.header`
   height: 10rem;
   padding: 3rem;
   max-width: 130rem;
+  width: 100%;
   margin: 0 auto;
 `;
 

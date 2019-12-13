@@ -24,7 +24,7 @@ const StyledInput = styled.input`
 const StyledForm = styled.form`
   display: flex;
   max-width: 40rem;
-  margin: 0 auto;
+  margin: 0 auto 6.5rem;
   align-items: center;
   justify-content: center;
   flex-direction: column;

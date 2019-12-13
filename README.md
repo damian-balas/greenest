@@ -46,11 +46,11 @@ To build this app for production run npm run build.
 
 - Input field value is persistent between page reloads
 
-- Display cities descriptions 
+- Display cities descriptions
 
 ## Status
 
-Project is: In progress.
+Project is: Finished.
 
 ## Contact
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import bgImage from '../../assets/images/environment.jpg';
 
@@ -8,13 +8,21 @@ const StyledHero = styled.section`
 
 const StyledImage = styled.div`
   background: url(${bgImage}) center/contain no-repeat;
-  height: 35rem;
+  height: 55vh;
+  min-height: 20rem;
+  max-height: 40rem;
+  @media (min-width: 35em) {
+    max-height: 70rem;
+  }
 `;
 
 const StyledText = styled.h2`
   font-size: 3rem;
   font-weight: 300;
   text-align: center;
+  @media (min-height: 45em) and (min-width: 62.5em) {
+    font-size: 4.5rem;
+  }
 `;
 
 const PrimaryColorText = styled.span`
@@ -31,4 +39,4 @@ const Hero = () => (
   </StyledHero>
 );
 
-export default Hero;
+export default memo(Hero);

@@ -10,6 +10,7 @@ import Form from './components/Form/Form';
 import getDateString from './utils/getDateString';
 import CitiesGrid from './components/CitiesGrid/CitiesGrid';
 import Spinner from './components/Spinner/Spinner';
+import Footer from './components/Footer/Footer';
 
 class App extends PureComponent {
   state = {
@@ -102,6 +103,7 @@ class App extends PureComponent {
             {isLoading && <Spinner />}
             {cities.length !== 0 && <CitiesGrid cities={cities} />}
           </main>
+          <Footer />
         </ThemeProvider>
       </>
     );

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(3rem);
+    transform: translateY(-3rem);
   };
   to {
     opacity: 1;
@@ -20,12 +20,12 @@ const StyledCitiesGrid = styled.div`
   margin: 6.5rem auto;
   max-width: 130rem;
   padding: 0 3rem;
-  animation: ${fadeIn} 0.2s ease-out;
 `;
 
 const StyledCity = styled.div`
   display: inline-flex;
   flex-direction: column;
+  animation: ${fadeIn} 0.3s ease-out;
 `;
 
 const StyledCityName = styled.span`
@@ -47,16 +47,14 @@ const StyledCityDescription = styled.span`
 `;
 
 const CitiesGrid = ({ cities }) => (
-  <div>
-    <StyledCitiesGrid>
-      {cities.map(({ pageid, title, extract }) => (
-        <StyledCity key={pageid}>
-          <StyledCityName>{title}</StyledCityName>
-          <StyledCityDescription>{extract}</StyledCityDescription>
-        </StyledCity>
-      ))}
-    </StyledCitiesGrid>
-  </div>
+  <StyledCitiesGrid>
+    {cities.map(({ pageid, title, extract }) => (
+      <StyledCity key={pageid}>
+        <StyledCityName>{title}</StyledCityName>
+        <StyledCityDescription>{extract}</StyledCityDescription>
+      </StyledCity>
+    ))}
+  </StyledCitiesGrid>
 );
 
 CitiesGrid.propTypes = {

@@ -21,10 +21,20 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.4;
     overflow-x: hidden;
     background-color: #edeadb;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
   button, input {
     font-family: inherit;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    flex: 1
   }
 `;
 

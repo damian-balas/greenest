@@ -4,6 +4,8 @@ import styled from 'styled-components';
 const StyledHeader = styled.header`
   height: 10rem;
   padding: 3rem;
+  max-width: 130rem;
+  margin: 0 auto;
 `;
 
 const StyledLogo = styled.h1`

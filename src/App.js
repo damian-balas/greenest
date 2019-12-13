@@ -8,11 +8,13 @@ import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Form from './components/Form/Form';
 import getDateString from './utils/getDateString';
+import CitiesGrid from './components/CitiesGrid/CitiesGrid';
 
 class App extends Component {
   state = {
     country: '',
     isCountryInvalid: false,
+    isLoading: false,
     cities: [],
     errorMessage: '',
   };
@@ -32,7 +34,6 @@ class App extends Component {
       }
       return citiesSet.size === citiesLimit;
     });
-
     // remove part after backslash to be able to get data from wikipedia api
     return [...citiesSet].map(city =>
       city.includes('/') ? city.substring(0, city.indexOf('/')) : city,
@@ -40,10 +41,9 @@ class App extends Component {
   };
 
   getCitiesDescription = async cities => {
-    const CITIES_DESCRIPTION_URL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&redirects=1&exsentences=2&format=json&origin=*&titles=${cities}`;
+    const CITIES_DESCRIPTION_URL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&redirects=1&exsentences=2&format=json&exsectionformat=plain&origin=*&titles=${cities}`;
 
     const response = await axios.get(CITIES_DESCRIPTION_URL);
-
     return response;
   };
 
@@ -60,6 +60,9 @@ class App extends Component {
           isCountryInvalid: false,
         },
         async () => {
+          this.setState({
+            isLoading: true,
+          });
           try {
             localStorage.setItem('country', country);
             this.setState({
@@ -89,10 +92,12 @@ class App extends Component {
             this.setState({
               cities: citiesArray,
               errorMessage: '',
+              isLoading: false,
             });
           } catch (error) {
             this.setState({
               errorMessage: error.message,
+              isLoading: false,
             });
           }
         },
@@ -102,7 +107,7 @@ class App extends Component {
 
   render() {
     const { handleSubmit } = this;
-    const { isCountryInvalid, errorMessage } = this.state;
+    const { isCountryInvalid, errorMessage, cities, isLoading } = this.state;
     return (
       <>
         <GlobalStyle />
@@ -115,6 +120,8 @@ class App extends Component {
               isCountryInvalid={isCountryInvalid}
               handleSubmit={handleSubmit}
             />
+            {isLoading && 'loading...'}
+            {cities.length !== 0 && <CitiesGrid cities={cities} />}
           </main>
         </ThemeProvider>
       </>

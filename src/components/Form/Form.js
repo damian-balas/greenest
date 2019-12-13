@@ -71,6 +71,7 @@ const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.primary};
   color: white;
   cursor: pointer;
+  outline: none;
 
   :hover,
   :focus {

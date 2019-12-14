@@ -4,6 +4,8 @@
 
 This app displays ten most polluted cities in 4 countries (Poland, Germany, France, Spain).
 
+[Live demo](https://damian-balas.github.io/greenest/)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine.

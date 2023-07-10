@@ -21,7 +21,7 @@ class App extends PureComponent {
   };
 
   getPollutedCities = async (countryAbbr, citiesLimit) => {
-    const POLLUTED_CITIES_URL = `https://api.openaq.org/v1/measurements?country=${countryAbbr}&parameter=pm25&sort=desc&limit=500&order_by=value&date_from=${getDateString(
+    const POLLUTED_CITIES_URL = `https://api.openaq.org/v1/measurements?country=${countryAbbr}&parameter=pm25&sort=desc&limit=500&order_by=city&date_from=${getDateString(
       new Date(),
     )}`;
 
